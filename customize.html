@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Your Shirt - CraftHarbour</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home Page</a></li>
+                <li><a href="index.html#about-us">About Us</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#contacts">Contacts</a></li>
+                <li class="login"><a href="#">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="customization">
+        <h1>Design Your Shirt</h1>
+        <div class="customization-container">
+            <div class="tools">
+                <h3>Design Tools</h3>
+                <button onclick="addText()">Add Text</button>
+                <button onclick="addEmoji()">Add Emoji</button>
+                <button onclick="addImage()">Add Image</button>
+                <button onclick="clearCanvas()">Clear</button>
+                <label for="colorPicker">Choose Shirt Color:</label>
+                <input type="color" id="colorPicker" value="#ffffff">
+                <label for="textColorPicker">Choose Text Color:</label>
+                <input type="color" id="textColorPicker" value="#000000">
+                <h3>Shirt Details</h3>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" value="1">
+                <label for="size">Size:</label>
+                <select id="size">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <div class="canvas-container">
+                <canvas id="designCanvas" width="500" height="600"></canvas>
+                <button onclick="selectVendor()" class="select-vendor-btn">Select Vendor</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const canvas = document.getElementById('designCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('colorPicker');
+        const textColorPicker = document.getElementById('textColorPicker');
+        const quantityInput = document.getElementById('quantity');
+        const sizeSelect = document.getElementById('size');
+        let elements = [];
+        let selectedElement = null;
+        let offsetX, offsetY;
+
+        colorPicker.addEventListener('input', function() {
+            canvas.style.backgroundColor = colorPicker.value;
+            redrawCanvas();
+        });
+
+        function addText() {
+            const text = prompt('Enter your text:');
+            if (text) {
+                const x = 50;
+                const y = 50;
+                const textElement = { type: 'text', text: text, x: x, y: y, color: textColorPicker.value, size: 20, width: ctx.measureText(text).width, height: 20 };
+                elements.push(textElement);
+                drawElement(textElement);
+            }
+        }
+
+        function addEmoji() {
+            const emoji = prompt('Enter emoji:');
+            if (emoji) {
+                const x = 50;
+                const y = 50;
+                const emojiElement = { type: 'emoji', text: emoji, x: x, y: y, size: 40, width: ctx.measureText(emoji).width, height: 40 };
+                elements.push(emojiElement);
+                drawElement(emojiElement);
+            }
+        }
+
+        function addImage() {
+            const imgInput = document.createElement('input');
+            imgInput.type = 'file';
+            imgInput.accept = 'image/*';
+            imgInput.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const x = 50;
+                        const y = 50;
+                        const imgElement = { type: 'image', img: img, x: x, y: y, width: img.width / 2, height: img.height / 2 };
+                        elements.push(imgElement);
+                        drawElement(imgElement);
+                    };
+                };
+                reader.readAsDataURL(file);
+            };
+            imgInput.click();
+        }
+
+        function drawElement(element) {
+            if (element.type === 'text' || element.type === 'emoji') {
+                ctx.fillStyle = element.color || '#000';
+                ctx.font = `${element.size}px Arial`;
+                ctx.fillText(element.text, element.x, element.y);
+            } else if (element.type === 'image') {
+                ctx.drawImage(element.img, element.x, element.y, element.width, element.height);
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+            for (let i = elements.length - 1; i >= 0; i--) {
+                const element = elements[i];
+                if (isMouseOverElement(mouseX, mouseY, element)) {
+                    selectedElement = element;
+                    offsetX = mouseX - element.x;
+                    offsetY = mouseY - element.y;
+                    elements.splice(i, 1);
+                    elements.push(element);
+                    redrawCanvas();
+                    break;
+                }
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            selectedElement = null;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (selectedElement) {
+                const mouseX = e.offsetX;
+                const mouseY = e.offsetY;
+                selectedElement.x = mouseX - offsetX;
+                selectedElement.y = mouseY - offsetY;
+                redrawCanvas();
+            }
+        });
+
+        canvas.addEventListener('dblclick', (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+            if (selectedElement) {
+                selectedElement.size += 10;
+                redrawCanvas();
+            }
+        });
+
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+            for (let i = elements.length - 1; i >= 0; i--) {
+                const element = elements[i];
+                if (isMouseOverElement(mouseX, mouseY, element)) {
+                    elements.splice(i, 1);
+                    redrawCanvas();
+                    break;
+                }
+            }
+        });
+
+        canvas.addEventListener('wheel', (e) => {
+            if (selectedElement) {
+                if (e.deltaY < 0) {
+                    selectedElement.size += 5;
+                } else {
+                    selectedElement.size -= 5;
+                    if (selectedElement.size < 5) selectedElement.size = 5;
+                }
+                redrawCanvas();
+            }
+        });
+
+        function isMouseOverElement(mouseX, mouseY, element) {
+            if (element.type === 'text' || element.type === 'emoji') {
+                return mouseX >= element.x && mouseX <= element.x + ctx.measureText(element.text).width &&
+                       mouseY >= element.y - element.size && mouseY <= element.y;
+            } else if (element.type === 'image') {
+                return mouseX >= element.x && mouseX <= element.x + element.width &&
+                       mouseY >= element.y && mouseY <= element.y + element.height;
+            }
+            return false;
+        }
+
+        function redrawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = colorPicker.value;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            elements.forEach(drawElement);
+        }
+
+        function clearCanvas() {
+            elements = [];
+            redrawCanvas();
+        }
+
+        function selectVendor() {
+            const designData = canvas.toDataURL();
+            const quantity = quantityInput.value;
+            const size = sizeSelect.value;
+            const color = colorPicker.value;
+            localStorage.setItem('designData', designData);
+            localStorage.setItem('quantity', quantity);
+            localStorage.setItem('size', size);
+            localStorage.setItem('color', color);
+            window.location.href = 'select_vendor.html';
+        }
+    </script>
+</body>
+</html>
