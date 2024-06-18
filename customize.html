@@ -7,17 +7,30 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home Page</a></li>
-                <li><a href="index.html#about-us">About Us</a></li>
-                <li><a href="index.html#products">Products</a></li>
-                <li><a href="index.html#contacts">Contacts</a></li>
-                <li class="login"><a href="#">Login</a></li>
-            </ul>
+    <div class="nav" style="position: fixed; margin-top: -55px;">
+        <nav class="navbar">
+                <ul>
+                    <b>
+                    <li><img class="logo" src="images/Screenshot 2024-06-17 193227.png" alt=""></li>
+                    <li class="navb"><a href="index.html" class="home">Home</a></li>
+                    <li class="navb"><a href="#">About Us</a></li>
+                    <li class="navb"><a href="#">Products</a></li>
+            <li class="navb"><a href="#">Contact</a></li>
+                    <li class="navb" style="padding-top: 5px;">
+        <select name="login-signup" id="login-signup" onchange="openForm()">
+            <option value="" class="opt" style="display: none;">Login/SignUp</option>
+            <option value="buyer" class="opt">Buyer</option>
+            <option value="seller" class="opt">Seller</option>
+        </select>
+    </li>
+    
+                        <!--New div is made to make the login/signup to appear in the right-->
+                    </b>
+                </ul>
         </nav>
-    </header>
+    </div>
+
+    <br>
 
     <section id="customization">
         <h1>Design Your Shirt</h1>
@@ -48,6 +61,20 @@
             </div>
         </div>
     </section>
+    <br>
+    <br>
+    <div class="contact-section">
+        <p>
+            <b>ADDRESS:</b> 28 White tower, Street Name New
+            York City, USA
+        </p>
+        <p>
+            <b>TELEPHONE:</b> +91 987 654 3210
+        </p>
+        <p>
+            <b>EMAIL:</b> yourmain@gmail.com
+        </p>
+</div>
 
     <script>
         const canvas = document.getElementById('designCanvas');

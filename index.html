@@ -9,30 +9,37 @@
     <title>Craft Harbour</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.6.3.min.js"></script>
+
 <body>
     <!--Navbar starts here-->
+    <div class="nav" style="position: fixed; margin-top: -55px;">
     <nav class="navbar">
             <ul>
                 <b>
-                <li class="navb"><a href="#" class="home">HOME</a></li>
-                <li class="navb"><a href="#">ABOUT US</a></li>
-                <li class="navb"><a href="#">PRODUCTS</a></li>
-                <li class="navb"><a href="#" onclick="openForm()">CONTACT</a></li>
-                <li class="navb" style="float: right; margin-right: 30px; padding-top: 5px;"><select name="login-signup" id="login-signup">
-                    <option value="" class="opt" style="display: none;">Login/Sign Up</option>
-                    <option value="" class="opt"><button onclick="openForm()">BUYER</button></option>
-                    <option value="" class="opt"><button onclick="openForm()">SELLER</button></option>
-                </select></li>
+                <li><img class="logo" src="images/Screenshot 2024-06-17 193227.png" alt=""></li>
+                <li class="navb"><a href="#" class="home">Home</a></li>
+                <li class="navb"><a href="#">About Us</a></li>
+                <li class="navb"><a href="#">Products</a></li>
+		<li class="navb"><a href="#">Contact</a></li>
+                <li class="navb" style="padding-top: 5px;">
+    <select name="login-signup" id="login-signup" onchange="openForm()">
+        <option value="" class="opt" style="display: none;">Login/SignUp</option>
+        <option value="buyer" class="opt">Buyer</option>
+        <option value="seller" class="opt">Seller</option>
+    </select>
+</li>
+
                     <!--New div is made to make the login/signup to appear in the right-->
                 </b>
             </ul>
     </nav>
+</div>
     <!--Navbar ends here-->
     <!--Welcome Message division starts here-->
     <div class="wel">
         <img src="images/12.png" alt="" class="home-img">
         <h1>Embrace Your <br>Passion to Fashion <br> Through Us</h1>
-        <div class="login-Register-popup" id="Form">
+        <div class="login-Register-popup" id="Form" style="display: none;">
             <center>
                 <button class="close-btn" onclick="closeForm()">x</button>
             <div class="form">
@@ -59,7 +66,7 @@
                     <input type="email" placeholder="E-Mail"><br>
                     <input type="password" placeholder="password"><br>
                     <button class="submit">Submit</button>
-                    <p style="margin-left: 0%;">Aldready a Member? Please Login</p>
+                    <p style="margin-left: 0%;">Already a Member? Please Login</p>
                 </div>
             </div>
         </div>
@@ -109,22 +116,25 @@
     <div class="productsdiv">
         <ul>
             <li>
-                <button class="productsbtn" style="margin-left: 240px;">
+                <a href="customize.html"><button class="productsbtn" style="margin-left: 240px;">
                     <img src="images/p1.png.png" alt="Men's Full Shirt" class="productsimg">
                     <b><p class="productstxt">Men's Full Shirt</p></b>
                 </button>
+                </a>
             </li>
             <li>
-                <button class="productsbtn" style="margin-left: 80px;">
+                <a href="customize.html"><button class="productsbtn" style="margin-left: 80px;">
                     <img src="images/p11.png.png" alt="Men's Full Shirt" class="productsimg">
                     <b><p class="productstxt">Men's Half Shirt</p></b>
                 </button>
+            </a>
             </li>
             <li>
-                <button class="productsbtn" style="margin-left: 80px;">
+                <a href="customize.html"><button class="productsbtn" style="margin-left: 80px;">
                     <img src="images/image 1.png" alt="Men's Full Shirt" class="productsimg">
                     <b><p class="productstxt" style="margin-left: -70px;">T Shirt</p></b>
                 </button>
+            </a>
             </li>
             <br>
             
@@ -156,46 +166,29 @@
     <center><p style="font-size: 22px;">This website really helps to create your own designs on the clothing.</p></center>
 </div>
 <br>
-<div>
-        <div style="width: 30%; float:left; font-size: 15px; padding-left: 300px;">  
-                <p>
-                    <b>ADDRESS:</b> 28 White tower, Street Name New
-                    York City, USA
-                </p>
-                <p>
-                    <b>TELEPHONE:</b> +91 987 654 3210
-                </p>
-                <p>
-                    <b>EMAIL:</b> yourmain@gmail.com
-                </p>
-        </div>  
-  
-        <div style="width:20%; float:left;">  
-                <Menu>
-                    <b><p>Menu</p></b>
-                    <a href="">Home</a><br>
-                    <a href="">About Us</a><br>
-                    <a href="">Products</a><br>
-                    <a href="">Contact</a>
-                </Menu>
-
-        </div>
-        <div style="width:20%; float:left;">
-            <label for=""><b>Name</b></label>
-            <input style="width: 90%; height: 25px;" type="text"><br><br>
-            <label for=""><b>Feedback</b></label>
-            <input style="width: 120%; height: 45px;" type="text">
-        </div>  
-    </div> 
+<div class="contact-section">
+        <p>
+            <b>ADDRESS:</b> 28 White tower, Street Name New
+            York City, USA
+        </p>
+        <p>
+            <b>TELEPHONE:</b> +91 987 654 3210
+        </p>
+        <p>
+            <b>EMAIL:</b> yourmain@gmail.com
+        </p>
 </div>
-<script lang="javascript">
-    $(".login-Register-popup").hide();
-function openForm(){
-    $(".login-Register-popup").show();
-}
-function closeForm(){
-    $(".login-Register-popup").hide();
-}
+<script>
+    function openForm() {
+        const select = document.getElementById("login-signup");
+        if (select.value !== "") {
+            document.getElementById("Form").style.display = "block";
+        }
+    }
+
+    function closeForm() {
+        document.getElementById("Form").style.display = "none";
+    }
 </script>
 </body>
 </html>

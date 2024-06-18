@@ -1,44 +1,6 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
+body{
+    margin-top: 50px;
 }
-
-header {
-    background-color: grey;
-    color: black;
-    padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: black;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-}
-
-nav ul li a:hover {
-    color: orange;
-}
-
 .login {
     margin-left: auto;
 }
@@ -122,7 +84,92 @@ canvas {
 .select-vendor-btn:hover {
     background-color: #218838;
 }
+.logo{
+    width: 190px;
+    height: 50px;
+    margin-left: -700px;
+    float: left;
+    mix-blend-mode: multiply;
+    position: absolute;
+    margin-top: -30px;
+}
+.nav{
+    margin-left: -8px;
+    background: #FFFFFF;
+    width: 100%;
+    padding-left: 48%;
+    padding-top: 0px;
+}
+.navdiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navb{
+    border-radius: 7px;
+    margin-left: 30px;
+    padding: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.sell-btn{
+    border: 0px;
+    background: #FFFFFF;
+    margin-top: 4px;
+    border-radius: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 3px 2px 2px 3px;
+    margin-right: 20px;
+}
+.sell-btn:focus, .sell-btn:active, .sell-btn:hover{
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 1px #F7444E;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    transition-duration: 0.35s;
+}
 
+.navb:focus, .navb:active, .navb:hover{
+    outline-color: transparent;
+    outline-style:solid;
+    box-shadow: 0 0 0 1px #F7444E;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    transition-duration: 0.35s;
+}
+li{
+    list-style-type: none;
+    display: inline-block;
+    align-items: center;
+}
+li a{
+    color: #000000;
+    font-size: 20px;
+}
+a:link { 
+    text-decoration: none; 
+} 
+a:visited { 
+    text-decoration: none;
+     
+} 
+a:hover { 
+    text-decoration: #F7444E; 
+} 
+a:active { 
+    text-decoration: none; 
+}
+#login-signup{
+    width: max-content;
+    border: none;
+    outline: 0px;
+    font-size: 22px;
+    font-weight: bold;
+    -webkit-appearance: none;
+    padding-left: 3px;
+    background: none;
+}
 @media (max-width: 768px) {
     .customization-container {
         flex-direction: column;
